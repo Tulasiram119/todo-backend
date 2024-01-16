@@ -46,13 +46,13 @@ const updateTodo = async (req, res) => {
     if (!todo) {
       return res.sendStatus(404);
     }
-    const { title, description, lastDate, isCompleted, importance } = req.body;
+    const { title, description, lastDate, isCompelted, importance } = req.body;
     const updatedDoc = {
       $set: {
         title: title ? title : todo.title,
         description: description ? description : todo.description,
         lastDate: lastDate ? lastDate : todo.lastDate,
-        isCompleted: isCompleted ? isCompleted : todo.isCompelted,
+        isCompelted: isCompelted !== undefined ? isCompelted : todo.isCompelted,
         importance: importance ? importance : importance,
       },
     };
@@ -90,9 +90,16 @@ const getASingleTodo = async (req, res) => {
     if (!todo) {
       return res.sendStatus(404);
     }
+    return res.status(200).json(todo);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
   }
 };
-module.exports = { retriveAllTodos, createTodo, updateTodo, deleteTodo };
+module.exports = {
+  retriveAllTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  getASingleTodo,
+};

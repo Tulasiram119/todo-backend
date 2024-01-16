@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../model/User");
 const authController = async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
   if (!email || !password) {
     return res.status(400).json({ message: "email and password is required" });
   }
@@ -28,7 +29,7 @@ const authController = async (req, res) => {
     return res.json({ ascessToken });
   } catch (error) {
     console.log(error);
-    res.status(500).json({message:error.message});
+    res.status(500).json({ message: error.message });
   }
 };
 

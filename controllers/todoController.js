@@ -20,14 +20,15 @@ const createTodo = async (req, res) => {
   if (!email || !id) {
     return res.status(401).json({ message: "Invalid creditionals" });
   }
-  const { title, description } = req.body;
-  if (!title || !description) {
-    return res.status(400).json({ message: "required fields are missing" });
-  }
+  const { title, description, lastDate, importance, isCompelted } = req.body;
+
   try {
     const result = await Todo.create({
       title,
       description,
+      lastDate,
+      importance,
+      isCompelted,
       user: id,
     });
     res.status(201).json(result);
@@ -38,9 +39,11 @@ const createTodo = async (req, res) => {
 };
 const updateTodo = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   if (id.length < 24) {
     return res.sendStatus(400);
   }
+
   try {
     const todo = await Todo.findOne({ _id: id }).exec();
     if (!todo) {
@@ -65,9 +68,11 @@ const updateTodo = async (req, res) => {
 };
 const deleteTodo = async (req, res) => {
   const id = req.params.id;
+  console.log(id.length);
   if (id.length < 24) {
     return res.sendStatus(400);
   }
+
   try {
     const todo = await Todo.findOne({ _id: id });
     if (!todo) {

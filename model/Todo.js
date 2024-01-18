@@ -15,8 +15,8 @@ const todoSchema = new Schema({
     required: true,
   },
   isCompelted: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: "No",
   },
   lastDate: {
     type: Date,
